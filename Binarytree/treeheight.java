@@ -24,7 +24,7 @@ public class treeheight {
 
     }
 
-    // Count the node in tree
+    // Count the Node in tree
     public static int count(Node root) {
         if (root == null) {
             return 0;
@@ -35,7 +35,7 @@ public class treeheight {
         return leftcount + rightcouint + 1;
     }
 
-    // sum of NOde in tree
+    // sum of Node in tree
     public static int sum(Node root) {
         if (root == null) {
             return 0;
