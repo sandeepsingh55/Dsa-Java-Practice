@@ -62,6 +62,19 @@ public class treeheight {
 
     }
 
+    public static void Kthlevel(Node root, int level, int k) {
+        if (root == null) {
+            return;
+        }
+        if (level == k) {
+            System.out.print(root.data+" ");
+            return;
+        }
+        Kthlevel(root.left, level + 1, k);
+        Kthlevel(root.right, level + 1, k);
+
+    }
+
     public static void main(String[] args) {
         Node root = new Node(1);
         root.left = new Node(2);
@@ -74,6 +87,10 @@ public class treeheight {
         System.out.println("total count of nodes in tree " + count(root));
         System.out.println("Sum of nodes " + sum(root));
         System.out.println("Diameter of tree " + Diameter(root));
+
+        int k = 3;
+        System.out.println("kth level data called ");
+        Kthlevel(root, 1, k);
 
     }
 }
