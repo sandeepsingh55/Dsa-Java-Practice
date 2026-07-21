@@ -94,6 +94,51 @@ public class LCA {
         return dist1 + dist2;
     }
 
+    // KTH ANCESTOR OF NODE
+    public static int KthAncestor(Node root, int k, int n) {
+        if (root == null) {
+            return -1;
+        }
+        if (root.data == k) {
+            return 0;
+        }
+        int leftdist = KthAncestor(root.left, k, n);
+        int rightdist = KthAncestor(root.right, k, n);
+        if (leftdist == -1 && rightdist == -1) {
+            return -1;
+        }
+        int max = Math.max(leftdist, rightdist);
+        if (max + 1 == k) {
+            System.out.println(root.data);
+        }
+        return max + 1;
+
+    }
+    // TRANSFORM TO SUM OF TREE
+
+    public static int transform(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftchild = transform(root.left);
+        int rightchild = transform(root.right);
+
+        int data = root.data;
+
+        root.data = root.left.data + leftchild + root.right.data + rightchild;
+
+        return data;
+    }
+
+    public static void preorder(Node root) {
+        if (root == null) {
+            return;
+        }
+        System.out.print(root.data + " ");
+        preorder(root.left);
+        preorder(root.right);
+    }
+
     public static void main(String[] args) {
         Node root = new Node(1);
         root.left = new Node(2);
@@ -103,10 +148,14 @@ public class LCA {
         root.right.left = new Node(6);
         root.right.right = new Node(7);
 
-        int n1 = 4, n2 = 5;
+        int n1 = 4, n2 = 5, n = 5, k = 2;
         System.out.println(lca(root, n1, n2).data);
         System.out.println(lca2(root, n1, n2).data);
 
         System.out.println(mindist(root, n1, n2));
+        System.out.println(KthAncestor(root, k, n));
+
+        transform(root);
+        preorder(root);
     }
 }
