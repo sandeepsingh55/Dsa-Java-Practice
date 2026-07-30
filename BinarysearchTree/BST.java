@@ -1,5 +1,7 @@
 package BinarysearchTree;
 
+import java.util.ArrayList;
+
 public class BST {
     public static class Node {
         int data;
@@ -101,7 +103,59 @@ public class BST {
             printrange(root.right, k1, k2);
         }
     }
+    // Root to leaf path
 
+    public static void printPath(ArrayList<Integer> path) {
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i) + "->");
+        }
+        System.out.println();
+
+    }
+
+    public static void printRootleaf(Node root, ArrayList<Integer> path) {
+        if (root == null) {
+            return;
+        }
+
+        path.add(root.data);
+        if (root.left == null && root.right == null) {
+            printPath(path);
+        }
+        printRootleaf(root.left, path);
+        printRootleaf(root.right, path);
+        path.remove(path.size() - 1);
+
+    }
+
+    // valid BST
+    public static boolean isvalidbst(Node root, Node min, Node max) {
+        if (root == null) {
+            return true;
+        }
+        if (min != null && root.data <= min.data) {
+            return false;
+        } else if (max != null && root.data >= max.data) {
+            return false;
+        }
+        return isvalidbst(root.left, min, root) && isvalidbst(root.right, root, max);
+    }
+
+    // MIRROR OF BST
+
+    public static Node mirrorBst(Node root) {
+        if (root == null) {
+            return null;
+        }
+        Node ls = mirrorBst(root.left);
+        Node rs = mirrorBst(root.right);
+        root.left = rs;
+        root.right = ls;
+
+        return root;
+    }
+
+    /// MAIN FUNCTION
     public static void main(String[] args) {
         int values[] = { 8, 5, 3, 1, 4, 6, 10, 11, 14 };
         Node root = null;
@@ -117,5 +171,13 @@ public class BST {
         // root = delete(root, 2);
         inorder(root);
         printrange(root, 5, 12);
+        printRootleaf(root, new ArrayList<>());
+        if (isvalidbst(root, null, null)) {
+            System.out.println("valid BST");
+        } else {
+            System.out.println("not valid ");
+        }
+        mirrorBst(root);
+        inorder(root);
     }
 }

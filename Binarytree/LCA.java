@@ -157,5 +157,6 @@ public class LCA {
 
         transform(root);
         preorder(root);
+        printRootleaf(root, new ArrayList<>());
     }
 }
